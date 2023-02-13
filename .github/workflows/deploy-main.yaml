@@ -1,0 +1,23 @@
+name: Deploy model
+run-name: ${{ github.actor }} is deploying
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v1"
+        with:
+          service_account: "github-action@gareths-project.iam.gserviceaccount.com"
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
+
+      - uses: "google-github-actions/setup-gcloud@v1"
+
+      - run: gcloud container clusters get-credentials gareths-project-cluster --zone europe-west4-a

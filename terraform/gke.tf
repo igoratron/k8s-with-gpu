@@ -3,12 +3,6 @@ resource "google_project_service" "enable_gke" {
   service = "container.googleapis.com"
 }
 
-resource "google_service_account" "gke" {
-  account_id   = "gke-service-account"
-  display_name = "GKE service account"
-  project      = google_project.gareth.project_id
-}
-
 resource "google_container_cluster" "primary" {
   name     = "${local.project_id}-cluster"
   location = "${local.gke_location}-a"
