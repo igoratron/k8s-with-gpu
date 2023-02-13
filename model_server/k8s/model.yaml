@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: model-server
+  name: model-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-server
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: model-server
+    spec:
+      containers:
+        - image: europe-west2-docker.pkg.dev/gareths-project/main/model-server
+          env:
+            - name: LD_LIBRARY_PATH
+              value: /usr/local/nvidia/lib64
+          name: model-server
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+status: {}

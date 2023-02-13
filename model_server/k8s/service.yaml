@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: model-server
+    skaffold.dev/run-id: cbec59af-df81-4dfc-b3db-ad4139edf146
+  name: model-server
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: model-server
+status:
+  loadBalancer: {}
