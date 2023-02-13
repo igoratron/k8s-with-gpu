@@ -13,13 +13,3 @@ resource "google_artifact_registry_repository" "main" {
     google_project_service.enable_artifacts
   ]
 }
-
-resource "google_artifact_registry_repository_iam_binding" "gke_image_puller" {
-  project = google_artifact_registry_repository.main.project
-  location = google_artifact_registry_repository.main.location
-  repository = google_artifact_registry_repository.main.name
-  role = "roles/artifactregistry.reader"
-  members = [
-    "serviceAccount:${google_service_account.gke.email}",
-  ]
-}
