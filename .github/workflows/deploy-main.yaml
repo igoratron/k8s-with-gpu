@@ -32,7 +32,6 @@ jobs:
       - name: Build and deploy
         uses: hiberbee/github-action-skaffold@1.25.0
         with:
-          command: build
+          command: run
           working-directory: ./model_server
-          repository: europe-west2-docker.pkg.dev/gareths-project
           tag: ${{ github.sha }}
