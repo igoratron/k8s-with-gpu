@@ -1,10 +1,13 @@
 name: Deploy model
-run-name: ${{ github.actor }} is deploying
-on: [push]
-# on:
-#   push:
-#     branches:
-#     - main
+run-name: ${{ github.actor }} is deploying model_server
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "model_server/**"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
