@@ -9,9 +9,8 @@ def create_app():
     @app.route('/ping')
     def hello():
         use_cuda = torch.cuda.is_available()
-        return f'Ping? Pong!\nCuda available: #{use_cuda}'
         return {
-            is_cuda_enabled_service: use_cuda
+            'is_cuda_enabled_service': use_cuda
         }
 
     return app
