@@ -4,9 +4,9 @@ resource "google_project_service" "enable_gke" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = "${local.project_id}-cluster"
-  location = "${local.gke_location}-a"
-  project  = google_project.gareth.project_id
+  name                     = "${local.project_id}-cluster"
+  location                 = "${local.gke_location}-a"
+  project                  = google_project.gareth.project_id
   remove_default_node_pool = true
   initial_node_count       = 1
   network                  = google_compute_network.main.self_link
@@ -16,12 +16,12 @@ resource "google_container_cluster" "primary" {
   networking_mode          = "VPC_NATIVE"
 
   ip_allocation_policy {
-    cluster_secondary_range_name = "${local.project_id}-k8s-pod-range"
+    cluster_secondary_range_name  = "${local.project_id}-k8s-pod-range"
     services_secondary_range_name = "${local.project_id}-k8s-service-range"
   }
 
   private_cluster_config {
-    enable_private_nodes = true
+    enable_private_nodes   = true
     master_ipv4_cidr_block = "172.16.0.0/28"
   }
 }
@@ -48,6 +48,10 @@ resource "google_container_node_pool" "gke_nodes" {
     guest_accelerator {
       type  = "nvidia-tesla-t4"
       count = 1
+      gpu_sharing_config {
+        gpu_sharing_strategy       = "TIME_SHARING"
+        max_shared_clients_per_gpu = 3
+      }
     }
   }
 }
